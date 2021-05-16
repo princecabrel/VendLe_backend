@@ -5,7 +5,7 @@ const User = require('../models/User.model.js');
 require('dotenv').config();
 
 
-module.exports.Login=(req,res,next)=>{
+module.exports.login=(req,res,next)=>{
 	const {email,password}=req.body;
 
 	User.findOne({email})

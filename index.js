@@ -3,7 +3,8 @@ const app=express();
 const bodyParser=require('body-parser');
 const cors=require('cors');
 const dbConnect = require('./db.connect.js');
-const User=require('./routes/User.route.js');
+const Profile=require('./routes/Profile.route.js');
+const Authentication=require('./routes/Authentication.route.js');
 /*****cors error protection and data parsing*****/
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,5 +19,7 @@ app.use(bodyParser.json({limit:"50mb",extended: true, parameterLimit:50000}));
 app.get('/',(req,res,next)=>{
 	res.json('Hello world !')
 })
-app.use('/',User);
+app.use('/',Profile);
+app.use('/',Authentication);
+
 module.exports=app
