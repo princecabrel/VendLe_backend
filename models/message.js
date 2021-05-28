@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-  const messageSchema = new Schema{
+  const messageSchema = new Schema({
 	senderID:{
 		type:String,
 		required:true
@@ -16,7 +16,7 @@ const { Schema } = mongoose;
 	dateCreated:{
     	type:Date
     },
-}
+})
 
 /*Recommended
 -senderID

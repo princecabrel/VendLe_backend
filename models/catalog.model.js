@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 const { Schema } = mongoose;
 
-  const catalogueSchema = new Schema{
+  const catalogSchema = new Schema({
 	name:{
 		type:String,
 		required:true
@@ -16,7 +16,7 @@ const { Schema } = mongoose;
 	productsID:[String],
 	dateCreated:{
     	type:Date,
-        default:Date.now();
+        default:Date.now()
     },
     dateUpdated:{
     	type:Date
@@ -28,8 +28,8 @@ const { Schema } = mongoose;
             type:Date
         }
     }]
-}
-
+})
+module.exports = mongoose.model('Catalog',catalogSchema); 
 /*Recommended
 -Name
 -userID

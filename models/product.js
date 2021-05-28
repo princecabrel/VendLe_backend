@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-  const articleSchema = new Schema{
+  const articleSchema = new Schema({
 	name:{
 		type:String,
 		required:true
@@ -18,7 +18,7 @@ const { Schema } = mongoose;
 		type:String,
 		required:true
 	},
-	city;{
+	city:{
 		type:String
 	},
 	country:{
@@ -51,7 +51,7 @@ const { Schema } = mongoose;
    	type:Number
     },
     signal:{
-    	value:Boolean
+    	value:Boolean,
     	reason:String
     },
     promotionStatus:{
@@ -69,7 +69,7 @@ const { Schema } = mongoose;
             type:Date
         }
     }]
-}
+  })
 
 /*recommended
 -Name

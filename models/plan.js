@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-  const planSchema = new Schema{
+  const planSchema = new Schema({
 	name:{
 		type:String,
 		required:true
@@ -40,7 +40,7 @@ const { Schema } = mongoose;
 	        type:Date
 	    }
 	}]
-}
+})
 
 /*Recommended
 -name

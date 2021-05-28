@@ -10,7 +10,9 @@ const UserSchema=mongoose.Schema({
 	},
 	email:{
 		type:String,
-		required:true
+		required:true,
+		trim : true,
+		unique: true
 	},
 	username:{
 		type:String,
@@ -75,6 +77,18 @@ const UserSchema=mongoose.Schema({
 		oldValue:String,
 		newValue:String,
 		updateAt: Date
-    }]
-})
+    }],
+	resetPasswordToken:{
+		type: String,
+		required: false
+	},
+	resetPasswordExpires:{
+		type: Date,
+		required: false
+	},
+	
+
+},{timestamps : true}
+)
+
 module.exports=mongoose.model('User',UserSchema);
