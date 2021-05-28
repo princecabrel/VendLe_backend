@@ -1,14 +1,14 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-const subCategorySchema = new Schema{
+const subCategorySchema = new Schema({
 	name:{
 		type:String,
-		required:true
+		/*required:true*/
 	},
 	iconsUrl:{
 		type:String,
-		required:true
+		/*required:true*/
 	},
 	Datecreated:{
 		type:Date
@@ -23,6 +23,6 @@ const subCategorySchema = new Schema{
 	        type:Date
 	    }
 	}]
-}
+})
 
 module.exports=subCategorySchema;

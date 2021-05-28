@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-  const planSchema = new Schema{
+  const planSchema = new Schema({
 	name:{
 		type:String,
 		required:true
@@ -23,7 +23,7 @@ const { Schema } = mongoose;
 		required:true
 	},
 	duration:{
-		type:Date,
+		type:String,
 		required:true
 	},
 	dateCreated:{
@@ -40,7 +40,9 @@ const { Schema } = mongoose;
 	        type:Date
 	    }
 	}]
-}
+})
+
+  module.exports = mongoose.model('Plan', planSchema);
 
 /*Recommended
 -name
