@@ -41,8 +41,7 @@ module.exports.getOneProfile=(req,res,next)=>{
 
 
 module.exports.updateProfile=(req,res,next)=>{
-	let id =req.params.id;
-	let password=req.body.password;
+	let id =req.headers.id;
 
 	User.findOneAndUpdate({_id:id},{...req.body})
 	.then(user=>res.status(200).json({message:`User ${user.username} was updated successfully !`,User:user}))
@@ -54,7 +53,7 @@ module.exports.updateProfile=(req,res,next)=>{
 }
 
 module.exports.deleteProfile=(req,res,next)=>{
-	let id=req.params.id
+	let id=req.headers.id
 	User.findOneAndDelete({_id:id})
 	.then(user=>res.status(200).json({message:`User ${user.username} account was delete successfully !`}))
 	.catch(error=>{
@@ -76,7 +75,7 @@ module.exports.getProfileImage=async (req,res,next)=>{
 }
 
 module.exports.updateProfileImage=(req,res,next)=>{
-	let id=req.params.id
+	let id=req.headers.id
 	console.log(req.files.profile)
 	User.updateOne({_id:id},{profileImage:req.files.profile[0],profileUrl:`http://localhost:50002/profile/image/${id}`})
 	.then(user=>res.status(200).json({message:`profile Image of ${user.fullname} was updated`}))
@@ -84,4 +83,7 @@ module.exports.updateProfileImage=(req,res,next)=>{
 }
  function getID (id){
 	 return id;
+}
+module.exports.debut=(req,res,next)=>{
+	res.json('Hello world !')
 }
