@@ -5,6 +5,9 @@ const cors=require('cors');
 const dbConnect = require('./db.connect.js');
 const Profile=require('./routes/Profile.route.js');
 const Authentication=require('./routes/Authentication.route.js');
+const Product = require('./routes/Product.route.js');
+const Service = require('./routes/Service.route.js');
+const Transaction = require('./routes/Transaction.route.js')
 /*****cors error protection and data parsing*****/
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,5 +24,10 @@ app.get('/',(req,res,next)=>{
 })
 app.use('/',Profile);
 app.use('/',Authentication);
+app.use('/', Product);
+app.use('/', Service);
+app.use('/', Transaction)
+
+
 
 module.exports=app
