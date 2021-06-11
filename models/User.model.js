@@ -78,17 +78,9 @@ const UserSchema=mongoose.Schema({
 		newValue:String,
 		updateAt: Date
     }],
-	resetPasswordToken:{
-		type: String,
-		required: false
-	},
-	resetPasswordExpires:{
-		type: Date,
-		required: false
-	},
 	
 
-},{timestamps : true}
+}
 )
 
 module.exports=mongoose.model('User',UserSchema);

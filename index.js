@@ -6,7 +6,8 @@ const dbConnect = require('./db.connect.js');
 const Profile=require('./routes/Profile.route.js');
 const Authentication=require('./routes/Authentication.route.js');
 const Catalog=require ('./routes/Catalog.route.js');
-const Payment =require('./routes/Payment.route.js')
+const Payment =require('./routes/Payment.route.js');
+const forgotPassword = require ('./routes/forgotPassword.route.js');
 
 /*****cors error protection and data parsing*****/
 app.use((req, res, next) => {
@@ -26,4 +27,5 @@ app.use('/',Profile);
 app.use('/',Authentication);
 app.use('/',Catalog);
 app.use ('/',Payment);
+app.use ('/',forgotPassword);
 module.exports=app
