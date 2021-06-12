@@ -20,6 +20,7 @@ const resetTokenSchema = new mongoose.Schema(
        },
 
     }
-);
+);   
+console.log("ok")
 
 module.exports = mongoose.model('passwordResetToken', resetTokenSchema); 

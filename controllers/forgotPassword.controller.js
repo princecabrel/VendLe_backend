@@ -7,9 +7,10 @@ const passwordResetToken = require('../models/forgotPassword.model.js');
 
 
 
-module.exports.ResetPassword=(req, res)=>{
+module.exports.ResetPassword=(req, res)=>{ 
     if (!req.body.email){
         return res
+        console.log("ok")
         .status(500)
         .json({message : 'Email is required'});
         
