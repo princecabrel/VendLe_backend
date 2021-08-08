@@ -1,26 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
+const tokenSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
+  },
+  resettoken: {
+    type: String,
+    required: true,
+   
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+    expires: 900
+  },
+});
 
-const resetTokenSchema = new mongoose.Schema(
-    {
-        _userId: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true ,
-                ref: 'User'
-        },
-        resettoken : {
-            type: String,
-            required: true
-        },
-       createdAt: {
-           type: Date,
-           required: true,
-           default: Date.now,
-           expires: 43200
-       },
-
-    }
-);   
-console.log("ok")
-
-module.exports = mongoose.model('passwordResetToken', resetTokenSchema); 
+module.exports = mongoose.model("Token", tokenSchema);

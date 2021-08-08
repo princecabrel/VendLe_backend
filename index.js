@@ -7,7 +7,8 @@ const Profile=require('./routes/Profile.route.js');
 const Authentication=require('./routes/Authentication.route.js');
 const Catalog=require ('./routes/Catalog.route.js');
 const Payment =require('./routes/Payment.route.js');
-const forgotPassword = require ('./routes/forgotPassword.route.js');
+const forgotPassword = require('./routes/forgotPassword.route.js');
+
 
 /*****cors error protection and data parsing*****/
 app.use((req, res, next) => {
