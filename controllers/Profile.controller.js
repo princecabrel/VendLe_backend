@@ -20,6 +20,9 @@ conn.once('open', () => {
   gfs.collection('Images');
 });
 
+
+
+
 module.exports.getAllProfile=(req,res,next)=>{
 	User.find()
 	.then(user=>res.status(200).json({Users:user}))
@@ -74,16 +77,59 @@ module.exports.getProfileImage=async (req,res,next)=>{
 	})
 }
 
-module.exports.updateProfileImage=(req,res,next)=>{
+   module.exports.updateProfileImage = async (req, res) => {
+    const id = req.params._id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+    const path = req.file.path.replace(/\\/g, "/")
+
+    await User.findByIdAndUpdate(id, req.body = {ProfileImage: "http://localhost:3002/" + path}, { new: true });
+    res.json(updateProfile);
+}
+
+
+   module.exports.editUser =(req,res,next)=>{
+         /*allowedFields represente ici les champs que l'utilisateur est autorise a modifier dans son profil*/
+         const allowedFields= { fullName: req.body.fullName, username: req.body.username, phone: req.body.phone, gender: req.body.gender, country: req.body.country, city: req.body.city,}
+         User.findOne({_id:req.headers.id}, function (err,user) {
+
+            if (err) {
+            	next(err);
+            } else if(user) {
+
+            	req.user=user;
+            	user = Object.assign(user, allowedFields);
+
+            	user.save((err, savedUser)=>{
+            		if(err){
+            			return next(err);
+            		}
+            		res.json(savedUser.toJSON());
+            	});
+
+            } else {
+            	  next(new Error('failed to load user'));
+            }
+
+         })
+   }
+
+
+/*module.exports.updateProfileImage=(req,res,next)=>{
 	let id=req.headers.id
 	console.log(req.files.profile)
 	User.updateOne({_id:id},{profileImage:req.files.profile[0],profileUrl:`http://localhost:50002/profile/image/${id}`})
 	.then(user=>res.status(200).json({message:`profile Image of ${user.fullname} was updated`}))
 	.then(error=>res.status(404).json({message:'User does not exist'}))
-}
+}*/
+
+
+
  function getID (id){
 	 return id;
 }
+
 module.exports.debut=(req,res,next)=>{
 	res.json('Hello world !')
 }
