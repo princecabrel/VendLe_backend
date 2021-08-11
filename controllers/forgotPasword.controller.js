@@ -33,7 +33,7 @@ const ResetPassword = async (req, res, next)=>{
             .status (500)
             .json({message:"Email does not exist"});
         }
-var token = new Token ({userId: user._id, resettoken: crypto.randomBytes(3).toString('hex')})
+var token = new Token ({userId: user.id, resettoken: crypto.randomBytes(3).toString('hex')})
     token.save (function(err){
         if (err)
         {
@@ -42,7 +42,7 @@ var token = new Token ({userId: user._id, resettoken: crypto.randomBytes(3).toSt
             .status (500)
             .send({msg: err.message});
         } 
-        Token.find({_userId: user._id, resettoken:{$ne: token.resettoken}})
+        Token.find({_userId: user.id, resettoken:{$ne: token.resettoken}})
         .remove().exec();
         res
         .status(200)
@@ -81,13 +81,15 @@ const ValidPasswordtoken = async (req, res)=>{
             }
             const user = await Token.findOne({
                resettoken: req.body.resettoken 
+              
             });
+            
             if(!user){
                 return res
                 .status (409)
                 .json ({message: 'Code invalide'});
             }
-            User.findOneAndUpdate({_id: user.userId})
+            User.findOneAndUpdate({id: user.userId})
                 .then(()=>{
                     res
                 .status(200)
@@ -96,7 +98,8 @@ const ValidPasswordtoken = async (req, res)=>{
                 .catch((err)=>{
                     return res
                     .status(500)
-                    .send({msg:err.messafe});
+                    .send({msg:err.message});
+                   
                 });
 }
 
