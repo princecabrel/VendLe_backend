@@ -6,11 +6,19 @@ const UserSchema=mongoose.Schema({
 	},
 	password:{
 		type:String,
-		required:true
+		required:true,
+		min: [5, 'Too short, min is 5 characters'],
+		max: [32, 'Too long, max is 32 characters'],
 	},
 	email:{
 		type:String,
-		required:true
+		required:true,
+		trim : true,
+		unique: true,
+		lowercase: true,
+		min: [5, 'Too short, min is 5 characters'],
+		max: [32, 'Too long, max is 32 characters'],
+		match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]
 	},
 	username:{
 		type:String,
@@ -75,6 +83,10 @@ const UserSchema=mongoose.Schema({
 		oldValue:String,
 		newValue:String,
 		updateAt: Date
-    }]
-})
+    }],
+	
+
+}
+)
+
 module.exports=mongoose.model('User',UserSchema);

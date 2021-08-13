@@ -72,7 +72,6 @@ const { Schema } = mongoose;
 })
 
 module.exports=mongoose.model('Product',ProductSchema);
-
 /*recommended
 -Name
 -Description

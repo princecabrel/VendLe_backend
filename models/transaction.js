@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-const transactionSchema = new Schema{
+const transactionSchema = new Schema({
 
 	userID:{
 		type:String,
@@ -25,7 +25,7 @@ const transactionSchema = new Schema{
             type:Date
         }
     }]
-}
+})
 
 /*Recommended
 -userID

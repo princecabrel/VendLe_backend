@@ -16,7 +16,7 @@ module.exports.login=(req,res,next)=>{
 				let verify=bcrypt.compareSync(password,user.password);
 				console.log("verify",verify)
 				if(verify==false)
-					res.status(500).json({message:"authentication failed incorrect password"})
+					res.status(500).json({message:"authentication failed or incorrect password"})
 				let token=jwt.sign({user:user},process.env.JWT_KEY);
 				res.status(200).json({message:`${user.username} authenticated successfully` ,auth:true,token:token,user:user});
 		}catch(error){

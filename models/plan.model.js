@@ -43,7 +43,6 @@ const { Schema } = mongoose;
 })
 
   module.exports = mongoose.model('Plan', planSchema);
-
 /*Recommended
 -name
 -price

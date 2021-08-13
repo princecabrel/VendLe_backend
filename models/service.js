@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-const serviceSchema = new Schema{
+const serviceSchema = new Schema({
 	name:{
 		type:String,
 		required:true
@@ -19,7 +19,7 @@ const serviceSchema = new Schema{
 		type:String,
 		required:true
 	},
-	city;{
+	city:{
 		type:String
 	},
 	country:{
@@ -49,7 +49,7 @@ const serviceSchema = new Schema{
    	type:Number
     },
     signal:{
-    	value:Boolean
+    	value:Boolean,
     	reason:String
     },
     status:{
@@ -63,7 +63,7 @@ const serviceSchema = new Schema{
             type:Date
         }
     }]
-}
+})
 
 /*recommended
 -Name
