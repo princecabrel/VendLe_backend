@@ -61,22 +61,6 @@ const UserSchema=mongoose.Schema({
     role:{
 		type:String,
     },
-    profileImage:{
-		_id:String,
-		userID:String,
-		filename:String,
-		chunkSize:Number,
-		uploadDate:Date,
-		md5:String,
-		isImage:Boolean,
-		length:Number,
-		fieldname:String,
-		size:Number,
-		contentType:String,
-		bucketName:String,
-		encoding:String,
-		mimetype:String
-	},
     history:[{
 		collectionName:String,
 		column_name:String,
