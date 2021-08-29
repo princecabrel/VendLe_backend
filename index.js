@@ -15,6 +15,9 @@ const Catalog=require ('./routes/Catalog.route.js');
 const Payment =require('./routes/Payment.route.js');
 const forgotPassword = require('./routes/forgotPassword.route.js');
 
+const productsHome = require('./routes/ProductHome.route')
+const serviceHome = require('./routes/ServiceHome.route')
+
 
 
 /*****cors error protection and data parsing*****/
@@ -44,4 +47,8 @@ app.use('/',Profile);
 app.use('/',Catalog);
 app.use ('/',Payment);
 app.use ('/',forgotPassword);
+
+app.use('/',productsHome)
+app.use('/', serviceHome)
+
 module.exports=app

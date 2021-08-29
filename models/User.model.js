@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const product  = require('../models/product')
 
 const UserSchema=mongoose.Schema({
 	fullName:{
@@ -53,6 +54,7 @@ const UserSchema=mongoose.Schema({
     dateUpdated:{
 		type:Date,
     },
+	favourites:	{},
     followers:[String],
     followings:[String],
     profileUrl:{
