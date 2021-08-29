@@ -46,7 +46,9 @@ module.exports.getOneProfile=(req,res,next)=>{
 module.exports.updateProfile=(req,res,next)=>{
 	let id =req.headers.id;
 
-	User.findOneAndUpdate({_id:id},{...req.body})
+	User.findOneAndUpdate({_id:id},{...req.body,
+	favourites:{...req.body.favourites}
+	})
 	.then(user=>res.status(200).json({message:`User ${user.username} was updated successfully !`,User:user}))
 	.catch(error=>{
 		console.log('error on profile Update !',error);

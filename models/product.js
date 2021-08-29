@@ -32,13 +32,14 @@ const { Schema } = mongoose;
     	required:true
     },
     view:{
-    	type:Number
+    	type:Number,
+		default : 0
     },
     authorID:{
     	type:String,
     	required:true
     },
-    interested:[String]
+	 interested:[String]
     ,
     dateCreated:{
     	type:Date,
