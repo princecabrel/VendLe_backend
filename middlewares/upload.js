@@ -4,7 +4,7 @@ const grid=require('gridfs-stream');
 const multer=require('multer');
 require('dotenv').config();
 
-const connexion =mongoose.createConnection(process.env.MONGO_URI,{useUnifiedTopology:true,useNewUrlParser:true});
+const connexion =mongoose.createConnection('mongodb://127.0.0.1:27017',{useUnifiedTopology:true,useNewUrlParser:true});
 let gfs;
 connexion.once('open',()=>{
 	gfs=grid(connexion.db, mongoose.mongo);
@@ -12,7 +12,7 @@ connexion.once('open',()=>{
 })
 
 const storage=new gridStorage({
-	url:process.env.MONGO_URI,
+	url:'mongodb://127.0.0.1:27017',
 	file:(req,file)=>{
 	
 		return new Promise((resolve,reject)=>{
@@ -27,6 +27,17 @@ const storage=new gridStorage({
 		})
 	}
 })
-const upload=multer({storage}).fields([{name:'profile'}]);
+
+const fileFilter = (req, file, cb) => {
+    if((file.mimetype).includes('jpeg') || (file.mimetype).includes('png') || (file.mimetype).includes('jpg')){
+        cb(null, true);
+    } else{
+        cb(null, false);
+
+    }
+
+};
+
+const upload=multer({storage: storage, fileFilter: fileFilter}).fields([{name:'profile'}]);
 
 module.exports={upload,gfs};

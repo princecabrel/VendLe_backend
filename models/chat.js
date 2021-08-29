@@ -1,7 +1,7 @@
 const mongoose =require('mongoose');
 const { Schema } = mongoose;
-const messageSchema=require('/message.js)
-  const chatSchema = new Schema{
+const messageSchema=require('/message.js')
+  const chatSchema = new Schema({
 
 	ownerID:{
 		type:String,
@@ -26,7 +26,7 @@ const messageSchema=require('/message.js)
 	        type:Date
 	    }
 	}]
-}
+})
 
 /*Recommended
 -ownerID

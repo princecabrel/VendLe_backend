@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-  const articleSchema = new Schema({
+  const ProductSchema = new Schema({
 	name:{
 		type:String,
 		required:true
@@ -32,13 +32,14 @@ const { Schema } = mongoose;
     	required:true
     },
     view:{
-    	type:Number
+    	type:Number,
+		default : 0
     },
     authorID:{
     	type:String,
     	required:true
     },
-    interested:[String]
+	 interested:[String]
     ,
     dateCreated:{
     	type:Date,
@@ -71,6 +72,7 @@ const { Schema } = mongoose;
     }]
 })
 
+module.exports=mongoose.model('Product',ProductSchema);
 /*recommended
 -Name
 -Description

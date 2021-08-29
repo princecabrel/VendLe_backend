@@ -5,13 +5,15 @@ const Profile=require('../controllers/Profile.controller.js');
 const upload=require('../middlewares/upload.js')
 
 
-Router.get('/profiles',auth,Profile.getAllProfile)
-Router.get('/profile/:id',auth,Profile.getOneProfile)
-Router.put('/profile/update',auth,Profile.updateProfile)
-Router.delete('/profile/:id',auth,Profile.deleteProfile)
-Router.get('/profile/image/:id',auth,Profile.getProfileImage)
-Router.get('/home',auth,Profile.debut)
-Router.put('/profile/image/:id',auth,upload.upload,Profile.updateProfileImage)
+
+Router.get('/profiles',Profile.getAllProfile)
+Router.get('/profile/:id',Profile.getOneProfile)
+Router.put('/profile/update',Profile.updateProfile)
+Router.delete('/profile/:id',Profile.deleteProfile)
+Router.get('/profile/image/:id',Profile.getProfileImage)
+Router.get('/home',Profile.debut)
+Router.patch('/profile/image/:id',upload.upload,Profile.updateProfileImage)
+Router.put('/profile/edituser',Profile.editUser)
 
 module.exports=Router;
 

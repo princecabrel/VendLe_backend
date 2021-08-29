@@ -1,45 +1,150 @@
-const Product = require ('../models/Product.model')
-const mongoose = require('mongoose');
+const Product= require('../models/product')
 
-module.exports.postProduct= (req,res,next)=>{
-    const product = new Product({
-        ...req.body
+
+module.exports.createProduct=(req, res, next)=>{
+   
+   console.log(req.body)
+   const product= new Product({
+   	  ...req.body
+   })
+product.save()
+
+.then(Product=>{
+	res.status(200).json({
+		message:'product succesfully created',
+		Product:Product
+	})
+})
+
+ .catch(error=>{
+ 	res.status(400).json({error})
+ 	console.log(error)
+ })
+
+}
+
+
+module.exports.getAllProduct=(req, res, next)=>{
+   Product.find()
+   .then(Product=>{
+   	 res.status(200).json({Product:Product})
+   })
+
+   .catch(error=>{
+   	res.status(400).json({error})
+   	console.log(error)
+   })
+
+}
+
+module.exports.getOneProduct=(req, res, next)=>{
+	console.log(req.body)
+	Product.findOne({_id: req.headers.id})
+
+	.then(Product=>{
+		res.status(200).json({Product:Product})
+	})
+
+	.catch(error=>{
+		res.status(400).json({error})
+	})
+}
+
+module.exports.updateOneProduct=(req, res, next)=>{
+	console.log(req.body)
+	Product.findOneAndUpdate({_id: req.headers.id},
+         {...req.body}
+    )
+
+    .then(Product=>{
+    	res.status(200).json({
+             message:'category succesfully saved',
+    		Product:Product
+    	})
     })
-    product.save()
-    .then(()=> res.statut(201).json({message: 'Objer creer avec success !'}))
-    .cash(error => res.statut(404).json({error}))
-}
 
-module.exports.getAllProduct = (req,res,next)=>{
-    Product.find()
-    .then(products => res.statut(200).json(products))
-    .cash(error => res.statut(404).json(error))
-}
-module.exports.getOneProduct = (req,res,next)=>{
-    Product.findOne({_id : req.body.id})
-    .then(products => res.statut(200).json(products))
-    .cash(error => res.statut(404).json(error))
-}
-
-module.exports.updateProduct = (req,res,next)=>{
-    Product.updateOne(
-        {_id: req.header.id}, 
-    {
-        ...req.body,
-    _id : req.header.id
+    .catch(error=>{
+    	res.status(400).json({error})
     })
-    .then(product => res.statut(200).json(product))
-    .cash(error => res.statut(404).json(error))
-
 }
 
-module.exports.deleteOneProduct = (req,res,next)=>{
-    let id = req.headers.id
-    Product.deleteOne({_id:id})
-    .then(()=> res.statut(201).json({message: 'Objer Supprimer avec success !'}))
-    .cash(error => res.statut(404).json(error))
 
+module.exports.deleteProduct=(req, res, next)=>{
+     Product.findOneAndDelete({_id: req.headers.id})
+
+     .then(Category=>{
+     	res.status(200).json({
+     		message:'product succesfully deleted'
+     	})
+     })
+      
+      .catch(error=>{
+      	res.status(400).json({error})
+      })
 }
 
+
+//regroupe par categorie avec le authorID
+module.exports.getProductCategorie=(req,res,next)=>{
+//authorID:req.body.authorID
+
+    Product.find({})
+    .then(products=>{
+        console.log(products)
+        res.json(groupBy(products,function(item) {
+            return [item.category, item.authorID]
+        }))
+        
+    })
+    .catch(error=>console.log(error.message));
+}
+
+function arrayFromObject(obj) {
+    var arr = [];
+    for (var i in obj) {
+        arr.push(obj[i]);
+    }
+    return arr;
+}
+
+function groupBy(list, fn) {
+    var groups = {};
+    for (var i = 0; i < list.length; i++) {
+        var group = JSON.stringify(fn(list[i]));
+        if (group in groups) {
+            groups[group].push(list[i]);
+        } else {
+            groups[group] = [list[i]];
+        }
+    }
+    return arrayFromObject(groups);
+}
+
+
+
+
+
+
+
+//regroupe par categorie uniquement
+
+/*module.exports.getProductCategorie=(req,res,next)=>{
+//authorID:req.body.authorID
+    Product.find({})
+    .then(products=>{
+        console.log(products)
+        res.json(groupByCategory(products,'category'))
+        
+    })
+    .catch(error=>console.log(error.message));
+}
+function groupByCategory(array, Category) {
+   return array
+     .reduce((hash, obj) => {
+       if(obj[Category] === undefined) return hash; 
+       return Object.assign(hash, { [obj[Category]]:( hash[obj[Category]] || [] ).concat(obj)})
+     }, {})
+}*/
+ 
 
 
