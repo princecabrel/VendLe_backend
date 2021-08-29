@@ -5,6 +5,7 @@ const cors=require('cors');
 const dbConnect = require('./db.connect.js');
 const Profile=require('./routes/Profile.route.js');
 const Authentication=require('./routes/Authentication.route.js');
+const Favoris=require('./routes/favoris.route.js');
 
 const Plan = require('./routes/Plan.route.js');
 const Product = require('./routes/Product.route.js');
@@ -36,6 +37,7 @@ app.use('/', Category)
 app.use('/', Alert)
 app.use('/',Product)
 app.use('/',Authentication)
+app.use('/',Favoris)
 
 app.get('/',(req,res,next)=>{
 	res.json('Hello world !')

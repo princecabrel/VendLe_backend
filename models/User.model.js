@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const { Schema } = mongoose;
 
 const UserSchema=mongoose.Schema({
 	fullName:{
@@ -61,22 +62,19 @@ const UserSchema=mongoose.Schema({
     role:{
 		type:String,
     },
-    profileImage:{
-		_id:String,
-		userID:String,
-		filename:String,
-		chunkSize:Number,
-		uploadDate:Date,
-		md5:String,
-		isImage:Boolean,
-		length:Number,
-		fieldname:String,
-		size:Number,
-		contentType:String,
-		bucketName:String,
-		encoding:String,
-		mimetype:String
-	},
+	favoris:[{
+		id:{
+			type:Schema.Types.ObjectId,
+			ref:"Product"
+		},
+		type:String
+		}],
+		/*service:[{
+			type:Schema.Types.ObjectId,
+			ref:"Service"
+		}],
+		
+	},*/
     history:[{
 		collectionName:String,
 		column_name:String,
