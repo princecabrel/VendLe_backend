@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 const subCategorySchema = new Schema({
 	name:{
 		type:String,
-		required:true
+		/*required:true*/
 	},
 	iconsUrl:{
 		type:String,
-		required:true
+		/*required:true*/
 	},
 	Datecreated:{
 		type:Date

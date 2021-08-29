@@ -27,6 +27,17 @@ const storage=new gridStorage({
 		})
 	}
 })
-const upload=multer({storage}).fields([{name:'profile'}]);
+
+const fileFilter = (req, file, cb) => {
+    if((file.mimetype).includes('jpeg') || (file.mimetype).includes('png') || (file.mimetype).includes('jpg')){
+        cb(null, true);
+    } else{
+        cb(null, false);
+
+    }
+
+};
+
+const upload=multer({storage: storage, fileFilter: fileFilter}).fields([{name:'profile'}]);
 
 module.exports={upload,gfs};

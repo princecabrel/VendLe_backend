@@ -23,7 +23,7 @@ const { Schema } = mongoose;
 		required:true
 	},
 	duration:{
-		type:Date,
+		type:String,
 		required:true
 	},
 	dateCreated:{
@@ -42,6 +42,7 @@ const { Schema } = mongoose;
 	}]
 })
 
+  module.exports = mongoose.model('Plan', planSchema);
 /*Recommended
 -name
 -price

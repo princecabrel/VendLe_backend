@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
 
-  const articleSchema = new Schema({
+  const ProductSchema = new Schema({
 	name:{
 		type:String,
 		required:true
@@ -69,8 +69,9 @@ const { Schema } = mongoose;
             type:Date
         }
     }]
-  })
+})
 
+module.exports=mongoose.model('Product',ProductSchema);
 /*recommended
 -Name
 -Description

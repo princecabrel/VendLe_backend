@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
-const subCategory =require('./subCategory.js')
+const subCategory =require('./subCategory.model.js')
 
 const categorySchema = new Schema({
 	name:{
@@ -9,6 +9,7 @@ const categorySchema = new Schema({
 	},
 	iconsUrl:[String],
 	subCategory:[subCategory],
+
 	dateCreated:{
 		type:Date,
 		default:Date.now()
@@ -24,6 +25,8 @@ const categorySchema = new Schema({
 	    }
 	}]
 })
+
+module.exports= mongoose.model('Category', categorySchema);
 
 /*Recommended
 -Name
