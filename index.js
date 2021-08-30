@@ -2,33 +2,96 @@ const express =require('express');
 const app=express();
 const bodyParser=require('body-parser');
 const cors=require('cors');
-const dbConnect = require('./db.connect.js');
-const Profile=require('./routes/Profile.route.js');
-const Authentication=require('./routes/Authentication.route.js');
+const dbConnect = require('./db_connect.js');
+const Profile=require('./routes/profile_route.js');
+const Authentication=require('./routes/authentication_route.js');
 
-const Plan = require('./routes/Plan.route.js');
-const Product = require('./routes/Product.route.js');
-const Category= require('./routes/Category.route.js');
-const Alert= require('./routes/Alert.route.js')
+const Plan = require('./routes/plan_route.js');
+const Product = require('./routes/product_route.js');
+const Category= require('./routes/category_route.js');
+const Alert= require('./routes/alert_route.js')
 
-const Catalog=require ('./routes/Catalog.route.js');
-const Payment =require('./routes/Payment.route.js');
-const forgotPassword = require('./routes/forgotPassword.route.js');
+const Catalog=require ('./routes/catalog_route.js');
+const Payment =require('./routes/payment_route.js');
+const Message =require('./routes/message_route.js');
+const forgotPassword = require('./routes/forgot_password_route.js');
+const Discussion=require('./controllers/discussion_controller');
+const http = require('http').createServer(app)
+const io = require('socket.io')(http);
 
 
+io.on('connection', socket => {
+  console.log('Am connected')
+  //Get the chatID of the user and join in a room of the same chatID
+  chatID = socket.handshake.query.chatID
+  socket.join(chatID)
+
+  //Leave the room if the user closes the socket
+  socket.on('disconnect', () => {
+      console.log('Am disconnect')
+      socket.leave(chatID)
+  })
+
+  //Send message to only a particular user
+  socket.on('send_message', message => {
+      receiverChatID = message.receiverChatID
+      senderChatID = message.senderChatID
+      content = message.content
+
+      //Send message to only that particular room
+      socket.in(receiverChatID).emit('receive_message', {
+          'content': content,
+          'senderChatID': senderChatID,
+          'receiverChatID':receiverChatID,
+      })
+  })
+  socket.on('chat_direct',(data)=>{
+    console.log(data)
+  })
+});
+
+
+io.on('connection', socket => {
+  console.log('Am connected')
+  //Get the chatID of the user and join in a room of the same chatID
+  chatID = socket.handshake.query.chatID
+  socket.join(chatID)
+
+  //Leave the room if the user closes the socket
+  socket.on('disconnect', () => {
+      console.log('Am disconnect')
+      socket.leave(chatID)
+  })
+
+  //Send message to only a particular user
+  socket.on('send_message', message => {
+      receiverChatID = message.receiverChatID
+      senderChatID = message.senderChatID
+      content = message.content
+
+      //Send message to only that particular room
+      socket.in(receiverChatID).emit('receive_message', {
+          'content': content,
+          'senderChatID': senderChatID,
+          'receiverChatID':receiverChatID,
+      })
+  })
+  socket.on('chat_direct',(data)=>{
+    console.log(data)
+  })
+});
 
 /*****cors error protection and data parsing*****/
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
-});
-app.use(cors());
+});*/
+//app.use(cors());
 app.use(bodyParser.json({limit:"50mb",extended: true, parameterLimit:50000}));
 
 /*******endpoints******/
-
 
 
 app.use('/', Plan)
@@ -44,4 +107,5 @@ app.use('/',Profile);
 app.use('/',Catalog);
 app.use ('/',Payment);
 app.use ('/',forgotPassword);
+app.use ('/',Message);
 module.exports=app
