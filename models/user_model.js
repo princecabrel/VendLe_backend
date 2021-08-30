@@ -1,5 +1,9 @@
 const mongoose=require('mongoose');
 
+const { Schema } = mongoose;
+
+
+
 const UserSchema=mongoose.Schema({
 	fullName:{
 		type:String
@@ -61,6 +65,19 @@ const UserSchema=mongoose.Schema({
     role:{
 		type:String,
     },
+	favoris:[{
+		id:{
+			type:Schema.Types.ObjectId,
+			ref:"Product"
+		},
+		type:String
+		}],
+		/*service:[{
+			type:Schema.Types.ObjectId,
+			ref:"Service"
+		}],
+		
+	},*/
     history:[{
 		collectionName:String,
 		column_name:String,

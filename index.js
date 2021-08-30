@@ -5,7 +5,7 @@ const cors=require('cors');
 const dbConnect = require('./db_connect.js');
 const Profile=require('./routes/profile_route.js');
 const Authentication=require('./routes/authentication_route.js');
-
+const Favoris=require('./routes/favoris_route.js');
 const Plan = require('./routes/plan_route.js');
 const Product = require('./routes/product_route.js');
 const Category= require('./routes/category_route.js');
@@ -18,6 +18,9 @@ const forgotPassword = require('./routes/forgot_password_route.js');
 const Discussion=require('./controllers/discussion_controller');
 const http = require('http').createServer(app)
 const io = require('socket.io')(http);
+
+const productsHome = require('./routes/product_home_route')
+const serviceHome = require('./routes/service_home_route')
 
 
 io.on('connection', socket => {
@@ -99,6 +102,7 @@ app.use('/', Category)
 app.use('/', Alert)
 app.use('/',Product)
 app.use('/',Authentication)
+app.use('/',Favoris)
 
 app.get('/',(req,res,next)=>{
 	res.json('Hello world !')
@@ -108,4 +112,8 @@ app.use('/',Catalog);
 app.use ('/',Payment);
 app.use ('/',forgotPassword);
 app.use ('/',Message);
+
+
+app.use('/',productsHome)
+app.use('/', serviceHome)
 module.exports=app
