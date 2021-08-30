@@ -13,7 +13,10 @@ const { Schema } = mongoose;
 	color:{
 		type:String
 	},
-	productsID:[String],
+	products:[{
+		type:Schema.Types.ObjectId,
+        ref:"Product"
+	}],
 	dateCreated:{
     	type:Date,
         default:Date.now()
