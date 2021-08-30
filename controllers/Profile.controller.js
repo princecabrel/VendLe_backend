@@ -25,6 +25,7 @@ conn.once('open', () => {
 
 module.exports.getAllProfile=(req,res,next)=>{
 	User.find()
+	.populate('favoris')
 	.then(user=>res.status(200).json({Users:user}))
 	.catch(error=>{
 		console.log('users find error : ',error);
