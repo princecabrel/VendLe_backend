@@ -14,3 +14,5 @@ Please follow this template:
 ->  Lustigier Mbong | https://github.com/benus-code/ | @lebenus#7537
 ->  prince cabrel | https://github.com/princecabrel/ @prince cabrel#4258
 ->  Angelo Diepe | https://github.com/artemesian/ @Angelo#6931
+->  LOIC Meli | https://github.com/LoicMeli/
+

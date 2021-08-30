@@ -13,6 +13,7 @@ const catalogSchema = new Schema({
 	color: {
 		type: String
 	},
+
 	productsID: [String],
 	dateCreated: {
 		type: Date,
@@ -28,5 +29,24 @@ const catalogSchema = new Schema({
 			type: Date
 		}
 	}]
+
+	products:[{
+		type:Schema.Types.ObjectId,
+        ref:"Product"
+	}],
+	dateCreated:{
+    	type:Date,
+        default:Date.now()
+    },
+    dateUpdated:{
+    	type:Date
+    },
+    history:[{
+        oldrecord:[String],
+        newrecord:[String],
+        Datecreated:{
+            type:Date
+        }
+    }]
 })
 module.exports = mongoose.model('Catalog', catalogSchema);
