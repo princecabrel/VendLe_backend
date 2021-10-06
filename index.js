@@ -15,7 +15,7 @@ const Catalog=require ('./routes/catalog_route.js');
 const Payment =require('./routes/payment_route.js');
 const Message =require('./routes/message_route.js');
 const forgotPassword = require('./routes/forgot_password_route.js');
-const Discussion=require('./controllers/discussion_controller');
+const Discussion=require('./controllers/chat_controller');
 const http = require('http').createServer(app)
 const io = require('socket.io')(http);
 

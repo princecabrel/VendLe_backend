@@ -26,12 +26,13 @@ const UserSchema=mongoose.Schema({
 	},
 	username:{
 		type:String,
-		//required:true,
-		//unique:true
+		required:true,
+		unique:true
 	},
 	phone:{
 		type:Number,
-		required:true
+		required:true,
+		unique:true
 	},
 	gender:{
 		type:String,
@@ -53,15 +54,18 @@ const UserSchema=mongoose.Schema({
     },
     dateCreated:{
 		type:Date,
+		default:Date.now()
     },
     dateUpdated:{
 		type:Date,
     },
     followers:[String],
     followings:[String],
-    profileUrl:{
-		type:String,
-    },
+	discussions:[{
+		type:Schema.Types.ObjectId,
+		ref:"Chat"
+	}],
+    image:{},
     role:{
 		type:String,
     },
@@ -87,7 +91,7 @@ const UserSchema=mongoose.Schema({
     }],
 	
 
-}
+},{timestamps:true}
 )
 
 module.exports=mongoose.model('User',UserSchema);

@@ -1,29 +1,33 @@
 const mongoose=require('mongoose');
+const mongooseHistory=require('mongoose-history');
+const async=require('async')
 const { Schema } = mongoose;
 
+
   const messageSchema = new Schema({
-	sender:{
-		username:String,
-		senderID:String
-	},
+	sender:String
+	/*{
+		type:Schema.Types.ObjectId,
+		ref:"User"
+	}*/,
 	content:{
 		type:String,
 	},
-	receiver:{
-		username:String,
-		senderID:String
-	},
-	dateCreated:{
-    	type:Date,
-    	default:Date.now()
-    },
-    discussionID:{type:String,required:true},
-	product:{
+	receiver:String
+	/*{
 		type:Schema.Types.ObjectId,
-		ref: "Product"
-	}
+		ref:"User"
+	}*/,
+    discussionID:String
+	/*{
+		type:Schema.Types.ObjectId,
+		ref:"Chat",
+		required:
+		
+	}*/
 },{timestamp:true})
 
+messageSchema.plugin(mongooseHistory)
 module.exports=mongoose.model('Message',messageSchema);
 /*Recommended
 -senderID

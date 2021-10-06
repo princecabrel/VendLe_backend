@@ -6,9 +6,9 @@ require('dotenv').config();
 
 
 module.exports.login=(req,res,next)=>{
-	const {email,password}=req.body;
+	const {phone,password}=req.body;
 
-	User.findOne({email})
+	User.findOne({phone})
 	.then(user=>{
 		try{
 			if(!user)
@@ -18,7 +18,21 @@ module.exports.login=(req,res,next)=>{
 				if(verify==false)
 					res.status(500).json({message:"authentication failed or incorrect password"})
 				let token=jwt.sign({id:user._id},process.env.JWT_KEY);
-				res.status(200).json({message:`${user.username} authenticated successfully` ,auth:true,token:token,user:user});
+				res.status(200).json({message:`${user.username} authenticated successfully` ,auth:true,token:token,
+				user:{
+					id:user._id,
+					email:user.email,
+					username:user.username,
+					phone:user.phone,
+					follower_count:user.followers.length,
+					following_count:user.followings.length,
+					name:user.fullName,
+					profile_image:'',
+					discussion_count:user.discussions.length,
+					country:user.country,
+					age:user.birthday,
+					favoris_count:user.favoris.length
+				}});
 		}catch(error){
 			console.log(error.message)
 		}

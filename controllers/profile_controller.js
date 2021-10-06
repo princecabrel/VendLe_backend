@@ -1,21 +1,29 @@
 const jwt =require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+BSONPure = require('bson').BSONPure
+const {ObjectID, ObjectId}=require('mongodb')
 const User = require('../models/user_model.js');
 require('dotenv').config();
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-
 // Mongo URI
 const mongoURI = process.env.MONGO_URI;
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI,{ useUnifiedTopology: true ,useNewUrlParser: true});
 // Init gf
 let gfs;
+const cloudinary = require("cloudinary").v2;
 
+cloudinary.config({
+	cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+	api_key:process.env.CLOUDINARY_API_KEY,
+	api_secret:process.env.CLOUDINARY_API_SECRET
+})
 conn.once('open', () => {
   // Init stream
+  mongoose.mongo.BSONPure = BSONPure;
   gfs = Grid(conn.db, mongoose.mongo);  
   gfs.collection('Images');
 });
@@ -47,9 +55,7 @@ module.exports.getOneProfile=(req,res,next)=>{
 module.exports.updateProfile=(req,res,next)=>{
 	let id =req.headers.id;
 
-	User.findOneAndUpdate({_id:id},{...req.body,
-	favourites:{...req.body.favourites}
-	})
+	User.findOneAndUpdate({_id:id},{...req.body})
 	.then(user=>res.status(200).json({message:`User ${user.username} was updated successfully !`,User:user}))
 	.catch(error=>{
 		console.log('error on profile Update !',error);
@@ -68,27 +74,35 @@ module.exports.deleteProfile=(req,res,next)=>{
 	})
 }
 module.exports.getProfileImage=async (req,res,next)=>{
-	let userID=getID(req.params.id)
-	gfs.files.findOne({metadata:userID},(err,file)=>{
+	let filename=getID(req.params.filename)
+	console.log(filename);
+	gfs.files.findOne({filename:filename},(err,file)=>{
 		console.log(file)
 		// check if image exist
 		if (!file || file.length ===0) {
-			return res.status(404).json({message:'this profile image does not exist'})
+			return res.status(404).json({message:'this service image does not exist'})
 		}
 		const readstream = gfs.createReadStream(file.filename);
       	return readstream.pipe(res);
 	})
 }
 
-   module.exports.updateProfileImage = async (req, res) => {
-    const id = req.params._id;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-
-    const path = req.file.path.replace(/\\/g, "/")
-
-    await User.findByIdAndUpdate(id, req.body = {ProfileImage: "http://localhost:3002/" + path}, { new: true });
-    res.json(updateProfile);
+module.exports.updateProfileImage = async (req, res) => {
+		try {
+			// Upload image to cloudinary
+			let id=req.params.id
+			const result = await cloudinary.uploader.upload(req.file.path);
+			console.log(result)
+			User.findOneAndUpdate({id:id},{profileUrl:{url:result.url,public_id:result.public_id}})
+			.then(user=>res.status(200).json({message:'user updated successfully',user:user}))
+			.catch(err=>res.status(500).json({message:'An error occur !',error:err}))
+		  } catch (err) {
+			console.log(err);
+			res.status(500).json({message:'An error occur !',error:err})
+		  }
+	//if(req.files.profile==null)return res.status(500).json('Aucune image selectionnéé');
+	//const url=`http://localhost:50002/profile/image/${req.files.profile[0].filename}`
+	//return res.status(200).json(req.files.url)
 }
 
 
@@ -119,13 +133,6 @@ module.exports.getProfileImage=async (req,res,next)=>{
    }
 
 
-/*module.exports.updateProfileImage=(req,res,next)=>{
-	let id=req.headers.id
-	console.log(req.files.profile)
-	User.updateOne({_id:id},{profileImage:req.files.profile[0],profileUrl:`http://localhost:50002/profile/image/${id}`})
-	.then(user=>res.status(200).json({message:`profile Image of ${user.fullname} was updated`}))
-	.then(error=>res.status(404).json({message:'User does not exist'}))
-}*/
 
 
 

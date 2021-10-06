@@ -1,21 +1,21 @@
 const mongoose=require('mongoose');
 const { Schema } = mongoose;
-
-const subCategorySchema = new Schema({
+//const subCategory =require('./sub_category_model.js')
+const subCategorySchema = {
 	name:{
 		type:String,
-		/*required:true*/
+		required:true
 	},
-	iconsUrl:{
-		type:String,
-		/*required:true*/
-	},
-	Datecreated:{
+	iconsUrl:[String],
+	dateUpdated:{
 		type:Date
 	},
-	DateUpdated:{
-		type:Date
-	},
+	subCategory:[],
+	isSubCategory:Boolean,
+	parameters:[{
+		name:String,
+		type:String
+	}],
 	history:[{
 	    oldrecord:[String],
 	    newrecord:[String],
@@ -23,6 +23,6 @@ const subCategorySchema = new Schema({
 	        type:Date
 	    }
 	}]
-})
+}
 
 module.exports=subCategorySchema;

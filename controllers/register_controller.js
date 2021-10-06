@@ -23,7 +23,21 @@ module.exports.register=(req,res,next)=>{
 			if(!user)
 				return res.status(400).json({error:'user are not created'})
 			let token = jwt.sign({id:user._id},process.env.JWT_KEY);
-			res.status(200).json({auth:true,token:token,message:'account created !',user:user});
+			res.status(200).json({auth:true,token:token,message:'account created !',
+			user:{
+				id:user._id,
+                email:user.email,
+				username:user.username,
+				phone:user.phone,
+				follower_count:user.followers.length,
+				following_count:user.followings.length,
+				name:user.fullName,
+				profile_image:'',
+				discussion_count:user.discussions.length,
+				country:user.country,
+				age:user.birthday,
+				favoris_count:user.favoris.length
+				}});
 			console.log(user);
 		})
 		.catch(error=>{

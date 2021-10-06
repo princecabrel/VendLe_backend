@@ -1,7 +1,8 @@
 const Message=require('../models/message_model.js');
+const Chat =require('../models/chat_model')
 
 
-
+/************************** Message Crud *****************************/
 module.exports.createMessage=(req,res,next)=>{
 
 	console.log(req.body);
@@ -67,4 +68,39 @@ module.exports.updateMessage=(req,res,next)=>{
 	Message.findOneAndUpdate({_id:id},{...req.body})
 	.then(message=>res.status(200).json({message:'message was updated successfully !',Message:message}))
 	.catch(error=>res.status(404).json({message:'message was not updated !',error:error.message}))
+}
+
+/************************** Chat Crud *****************************/
+
+module.exports.createChat=(req,res,next)=>{
+	const chat = new Chat({
+		...req.body
+	})
+	chat.save()
+	.then(result=>{
+		res.status(200).json({result:result})
+	})
+	.catch(error=>res.status(500).json(error.message))
+}
+module.exports.getAllChats=(req,res,next)=>{
+	Chat.find()
+	.then(chats=>res.status(200).json({chatsList:chats}))
+	.catch(error=>res.status(404).json(error.message))
+}
+
+module.exports.getOneChat=(req,res,nex)=>{
+	Chat.findOne({name:req.body.name})
+	.then(chat=>res.status(200).json({chat:chat}))
+	.catch(error=>res.status(404).json(error.message))
+}
+
+module.exports.updateChat=(req,res,next)=>{
+	Chat.updateOne({name:req.body.name},{...req.body})
+	.then(result=>res.status(200).json('Chat discussion was updated sucessfully'))
+	.catch(error=>res.status(500).json({error:error.message,message:'An error occur'}))
+}
+module.exports.deleteOneChat=(req,res,next)=>{
+deleteOne({name:req.body.name})
+.then(result=>res.status(200).json('Message was deleted sucessfully'))
+.catch(error=>res.status(404).json({error:error.message,message:'An error occur'}))
 }

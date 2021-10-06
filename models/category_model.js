@@ -7,13 +7,13 @@ const categorySchema = new Schema({
 		type:String,
 		required:true
 	},
-	iconsUrl:[String],
+	iconsUrl:String,
 	subCategory:[subCategory],
-
-	dateCreated:{
-		type:Date,
-		default:Date.now()
-	},
+	isSubCategory:Boolean,
+	parameters:[{
+		name:String,
+		type:String
+	}],
 	dateUpdated:{
 		type:Date
 	},
@@ -24,7 +24,7 @@ const categorySchema = new Schema({
 	        type:Date
 	    }
 	}]
-})
+},{timestamps:true})
 
 module.exports= mongoose.model('Category', categorySchema);
 

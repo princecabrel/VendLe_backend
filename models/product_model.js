@@ -13,7 +13,7 @@ const { Schema } = mongoose;
 	contact:{
 		type:Number,
 	},
-	photosUrls:[String],
+	photosUrls:[],
 	category:{
 		type:String,
 		required:true
@@ -63,6 +63,7 @@ const { Schema } = mongoose;
         //status du produit (s'il est vendu ou non)
         type:String
     },
+	caracteristic:{},
     history:[{
         oldrecord:[String],
         newrecord:[String],

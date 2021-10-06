@@ -4,11 +4,27 @@ require('dotenv').config();
 mongoose.connect(process.env.MONGO_URI,{
 	useNewUrlParser:true,
 	useUnifiedTopology:true,
-	useCreateIndex:true,
-	useFindAndModify:true,
-	useFindAndModify:false
+//	useCreateIndex:true,
+//	useFindAndModify:true,
+//	useFindAndModify:false
 })
 .then(()=>console.log('db is successfully connected !'))
-.catch(()=>console.log('connection to db failed !'))
+.catch((error)=>console.log(error,'connection to db failed !'))
+
+
+
+mongoose.connection.on('connected', () => {
+  console.log('Mongo has connected succesfully')
+})
+mongoose.connection.on('reconnected', () => {
+  console.log('Mongo has reconnected')
+})
+mongoose.connection.on('error', error => {
+  console.log('Mongo connection has an error', error)
+  mongoose.disconnect()
+})
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongo connection is disconnected')
+})
 
 module.exports=mongoose;
